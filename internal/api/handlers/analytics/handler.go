@@ -10,7 +10,7 @@ import (
 )
 
 type Service interface {
-	GetAnalytis(context.Context, time.Time, time.Time) (*models.AnalyticsDB, error)
+	GetAnalytics(context.Context, time.Time, time.Time) (*models.AnalyticsDB, error)
 }
 
 type Handler struct {

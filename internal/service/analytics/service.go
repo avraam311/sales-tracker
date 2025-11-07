@@ -2,12 +2,13 @@ package analytics
 
 import (
 	"context"
+	"time"
 
 	"github.com/avraam311/sales-tracker/internal/models"
 )
 
 type Repository interface {
-	GetAnalytics(context.Context, string, string) (*models.AnalyticsDB, error)
+	GetAnalytics(context.Context, time.Time, time.Time) (*models.AnalyticsDB, error)
 }
 
 type Service struct {
