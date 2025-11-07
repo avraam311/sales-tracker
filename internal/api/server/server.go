@@ -3,13 +3,14 @@ package server
 import (
 	"net/http"
 
+	"github.com/avraam311/sales-tracker/internal/api/handlers/analytics"
 	"github.com/avraam311/sales-tracker/internal/api/handlers/sales"
 	"github.com/avraam311/sales-tracker/internal/api/middlewares"
 
 	"github.com/wb-go/wbf/ginext"
 )
 
-func NewRouter(ginMode string, handlerSale *sales.Handler) *ginext.Engine {
+func NewRouter(ginMode string, handlerSale *sales.Handler, handlerAn *analytics.Handler) *ginext.Engine {
 	e := ginext.New(ginMode)
 
 	e.Use(middlewares.CORSMiddleware())
@@ -22,6 +23,8 @@ func NewRouter(ginMode string, handlerSale *sales.Handler) *ginext.Engine {
 		api.GET("/items", handlerSale.GetSales)
 		api.PUT("/items/:id", handlerSale.PutSale)
 		api.DELETE("/items/:id", handlerSale.DeleteSale)
+
+		api.GET("/analytics", handlerAn.GetAnalytics)
 	}
 
 	return e
