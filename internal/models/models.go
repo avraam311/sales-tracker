@@ -1,7 +1,5 @@
 package models
 
-import "time"
-
 type SaleDTO struct {
 	Item   string  `json:"item" validate:"required" db:"item"`
 	Income float64 `json:"income" validate:"required" db:"income"`
@@ -11,8 +9,6 @@ type SaleDB struct {
 	ID        uint      `json:"id" validate:"required" db:"id"`
 	Item      string    `json:"item" validate:"required" db:"item"`
 	Income    float64   `json:"income" validate:"required" db:"income"`
-	CreatedAt time.Time `json:"created_at" validate:"required" db:"created_at"`
-	UpdatedAt time.Time `json:"updated_at" validate:"required" db:"updated_at"`
 }
 
 type AnalyticsDB struct {

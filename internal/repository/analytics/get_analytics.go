@@ -10,14 +10,14 @@ import (
 
 func (r *Repository) GetAnalytics(ctx context.Context, from, to time.Time) (*models.AnalyticsDB, error) {
 	query := `
-		SELECT
-			COALESCE(SUM(income), 0) as sum,
-			COALESCE(AVG(income), 0) as avg,
-			COUNT(*) as count,
-			PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY income) AS median,
-			PERCENTILE_CONT(0.9) WITHIN GROUP (ORDER BY income) AS percentile_90
-		FROM sale
-		WHERE created_at >= $1 AND created_at <= $2;
+        SELECT
+            COALESCE(SUM(income), 0) as sum,
+            COALESCE(AVG(income), 0) as avg,
+            COUNT(*) as count,
+            COALESCE(PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY income), 0) AS median,
+            COALESCE(PERCENTILE_CONT(0.9) WITHIN GROUP (ORDER BY income), 0) AS percentile_90
+        FROM sale
+        WHERE created_at >= $1 AND created_at <= $2;
     `
 
 	var analytics models.AnalyticsDB

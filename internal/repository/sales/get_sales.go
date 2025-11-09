@@ -9,7 +9,7 @@ import (
 
 func (r *Repository) GetSales(ctx context.Context) ([]*models.SaleDB, error) {
 	query := `
-		SELECT id, item, income, created_at, updated_at
+		SELECT id, item, income
 		FROM sale
 	`
 
