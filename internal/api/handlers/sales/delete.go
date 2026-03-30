@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/avraam311/sales-tracker/internal/api/handlers"
 	"github.com/avraam311/sales-tracker/internal/repository/sales"
@@ -14,14 +13,11 @@ import (
 )
 
 func (h *Handler) DeleteSale(c *ginext.Context) {
-	idStr := c.Param("id")
-	idInt, err := strconv.Atoi(idStr)
+	id, err := h.parseID(c)
 	if err != nil {
-		zlog.Logger.Error().Err(err).Msg("failed to convert param id into int")
-		handlers.Fail(c.Writer, http.StatusBadRequest, fmt.Errorf("invalid id: %s", err.Error()))
+		handlers.Fail(c.Writer, http.StatusBadRequest, err)
 		return
 	}
-	id := uint(idInt)
 
 	err = h.service.DeleteSale(c.Request.Context(), id)
 	if err != nil {

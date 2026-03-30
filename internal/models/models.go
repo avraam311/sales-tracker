@@ -1,14 +1,19 @@
 package models
 
+import (
+	"time"
+)
+
 type SaleDTO struct {
 	Item   string  `json:"item" validate:"required" db:"item"`
-	Income float64 `json:"income" validate:"required" db:"income"`
+	Income float64 `json:"income" validate:"required,gte=0" db:"income"`
 }
 
 type SaleDB struct {
 	ID        uint      `json:"id" validate:"required" db:"id"`
 	Item      string    `json:"item" validate:"required" db:"item"`
 	Income    float64   `json:"income" validate:"required" db:"income"`
+	CreatedAt time.Time `json:"created_at" db:"created_at"`
 }
 
 type AnalyticsDB struct {

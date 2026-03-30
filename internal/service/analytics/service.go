@@ -8,7 +8,7 @@ import (
 )
 
 type Repository interface {
-	GetAnalytics(context.Context, time.Time, time.Time) (*models.AnalyticsDB, error)
+	GetAnalytics(context.Context, time.Time, time.Time, string) ([]*models.AnalyticsDB, error)
 }
 
 type Service struct {

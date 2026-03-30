@@ -39,7 +39,8 @@ func (h *Handler) GetAnalytics(c *ginext.Context) {
 		handlers.Fail(c.Writer, http.StatusBadRequest, err)
 		return
 	}
-	analytics, err := h.service.GetAnalytics(c.Request.Context(), fromTime, toTime)
+	groupBy := c.Query("group_by")
+	analytics, err := h.service.GetAnalytics(c.Request.Context(), fromTime, toTime, groupBy)
 	if err != nil {
 		zlog.Logger.Error().Err(err).Msg("failed to get analytics")
 		handlers.Fail(c.Writer, http.StatusInternalServerError, fmt.Errorf("internal server error"))

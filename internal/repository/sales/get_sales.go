@@ -9,8 +9,9 @@ import (
 
 func (r *Repository) GetSales(ctx context.Context) ([]*models.SaleDB, error) {
 	query := `
-		SELECT id, item, income
+		SELECT id, item, income, created_at
 		FROM sale
+		ORDER BY created_at DESC
 	`
 
 	rows, err := r.db.QueryContext(ctx, query)
@@ -22,7 +23,7 @@ func (r *Repository) GetSales(ctx context.Context) ([]*models.SaleDB, error) {
 	var sales []*models.SaleDB
 	for rows.Next() {
 		var s models.SaleDB
-		err := rows.Scan(&s.ID, &s.Item, &s.Income)
+		err := rows.Scan(&s.ID, &s.Item, &s.Income, &s.CreatedAt)
 		if err != nil {
 			return nil, fmt.Errorf("repository/get_sales.go - failed to scan sale row - %w", err)
 		}
